@@ -1,0 +1,6 @@
+.wordle-guess {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
