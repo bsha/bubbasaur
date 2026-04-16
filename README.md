@@ -1,0 +1,1 @@
+When I would see my nephew a few times a year, we would play Wordle on the NYT Games app. We would want to play more than the one word provided each day, so we started thinking of words and writing it out on paper for each other. This is inspired by those games, for him to play as he would like, and for a way for us to connect.
