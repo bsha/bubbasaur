@@ -1,7 +1,4 @@
-import React from "react";
 import Key from "./Key/Key";
-
-type Props = {};
 
 const keyboardValues: string[][] = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -9,11 +6,11 @@ const keyboardValues: string[][] = [
   ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Delete"],
 ];
 
-const Keyboard = ({}: Props) => {
-  return keyboardValues.map((row) => (
-    <div>
-      {row.map((key) => (
-        <Key value={key}></Key>
+const Keyboard = () => {
+  return keyboardValues.map((row, index) => (
+    <div key={index}>
+      {row.map((key, index) => (
+        <Key key={index} value={key}></Key>
       ))}
     </div>
   ));

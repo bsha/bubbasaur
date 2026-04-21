@@ -1,4 +1,3 @@
-import React from "react";
 import Guess from "../Guess/Guess";
 import "./Board.css";
 
@@ -9,8 +8,8 @@ const Board = ({ guessCount, letterCount }: Props) => {
     <div className="wordle-board">
       {Array(guessCount)
         .fill("")
-        .map((_) => (
-          <Guess letterCount={letterCount}></Guess>
+        .map((_, index) => (
+          <Guess key={index} letterCount={letterCount}></Guess>
         ))}
     </div>
   );

@@ -1,5 +1,4 @@
-import React from "react";
-import "./Key.scss";
+import "./Key.module.scss";
 
 type Props = { value: string };
 

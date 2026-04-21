@@ -1,10 +1,10 @@
-import React from "react";
+import "@/components/wordle/Guess/Guess";
 import "./Tile.css";
-import type { TileStatus, TileStatusType } from "./types";
+import type { TileStatusType } from "./types";
 
 type Props = { value: string; status: TileStatusType };
 
-const Tile = ({ value = "" }: Props) => {
+const Tile = ({ value = "", status = "NOT_GUESSED" }: Props) => {
   return <div className="wordle-tile">{value}</div>;
 };
 
