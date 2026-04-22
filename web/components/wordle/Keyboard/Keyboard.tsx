@@ -1,4 +1,5 @@
 import Key from "./Key/Key";
+import styles from "./Keyboard.module.scss";
 
 const keyboardValues: string[][] = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -8,7 +9,7 @@ const keyboardValues: string[][] = [
 
 const Keyboard = () => {
   return keyboardValues.map((row, index) => (
-    <div key={index}>
+    <div key={index} className={styles.keyboardRow}>
       {row.map((key, index) => (
         <Key key={index} value={key}></Key>
       ))}

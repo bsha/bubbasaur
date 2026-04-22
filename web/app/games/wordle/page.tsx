@@ -4,11 +4,17 @@ import Board from "@components/wordle/Board";
 import Keyboard from "@components/wordle/Keyboard";
 import { useWordleStore } from "@stores/useWordleStore";
 import Link from "next/link";
-import { type KeyboardEvent } from "react";
 
 const Wordle = () => {
-  const { letterCount, guessCount } = useWordleStore();
-  const onGuess = (_: KeyboardEvent) => {};
+  const {
+    letterCount,
+    guessCount,
+    guesses,
+    currentGuess,
+    answer,
+    setCurrentGuess,
+    submitGuess,
+  } = useWordleStore();
 
   return (
     <div className="">
@@ -16,7 +22,13 @@ const Wordle = () => {
         <Link href="/games/wordle/settings">Settings</Link>
       </nav>
       <div>
-        <Board guessCount={guessCount} letterCount={letterCount} />
+        <Board
+          guessCount={guessCount}
+          letterCount={letterCount}
+          guesses={guesses}
+          currentGuess={currentGuess}
+          answer={answer}
+        />
         <Keyboard></Keyboard>
       </div>
       <div>
@@ -25,8 +37,14 @@ const Wordle = () => {
           <input
             id="guess"
             type="text"
-            maxLength={5}
-            onKeyDown={onGuess}
+            maxLength={letterCount}
+            value={currentGuess}
+            onChange={(e) => setCurrentGuess(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitGuess();
+              }
+            }}
           ></input>
         </div>
       </div>

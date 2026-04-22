@@ -6,6 +6,7 @@ type WordleStore = {
   // user-configurable settings
   letterCount: number;
   guessCount: number;
+  answer: string;
 
   // active game state
   guesses: string[];
@@ -15,10 +16,11 @@ type WordleStore = {
   // settings actions
   setLetterCount: (count: number) => void;
   setGuessCount: (count: number) => void;
+  setAnswer: (word: string) => void;
 
   // gameplay actions
   setCurrentGuess: (guess: string) => void;
-  submitGuess: (guess: string) => void;
+  submitGuess: () => void;
   resetGame: () => void;
   startGame: () => void;
 };
@@ -26,6 +28,7 @@ type WordleStore = {
 export const useWordleStore = create<WordleStore>((set, get) => ({
   letterCount: 5,
   guessCount: 6,
+  answer: "",
 
   guesses: [],
   currentGuess: "",
@@ -34,6 +37,7 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
   setLetterCount: (count) =>
     set({
       letterCount: count,
+      answer: "",
       guesses: [],
       status: "idle",
     }),
@@ -45,13 +49,22 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
       status: "idle",
     }),
 
+  setAnswer: (word) =>
+    set({
+      answer: word,
+      letterCount: word.length,
+      guesses: [],
+      status: "idle",
+    }),
+
   setCurrentGuess: (guess) => {
     const { letterCount } = get();
     set({ currentGuess: guess.slice(0, letterCount).toUpperCase() });
   },
 
   submitGuess: () => {
-    const { currentGuess, guesses, guessCount, letterCount, status } = get();
+    const { currentGuess, guesses, guessCount, letterCount, status, answer } =
+      get();
 
     if (status === "won" || status === "lost") return;
     if (currentGuess.length !== letterCount) return;
@@ -59,11 +72,13 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
 
     const nextGuesses = [...guesses, currentGuess];
     const hasUsedAllGuesses = nextGuesses.length >= guessCount;
+    const isCorrect =
+      answer && nextGuesses[nextGuesses.length - 1] === answer.toUpperCase();
 
     set({
       guesses: nextGuesses,
       currentGuess: "",
-      status: hasUsedAllGuesses ? "lost" : "playing",
+      status: isCorrect ? "won" : hasUsedAllGuesses ? "lost" : "playing",
     });
   },
 
