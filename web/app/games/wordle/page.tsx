@@ -21,6 +21,7 @@ const Wordle = () => {
       <nav style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
         <Link href="/games/wordle/settings">Settings</Link>
       </nav>
+      <div>Testing - Answer is: {answer}</div>
       <div>
         <Board
           guessCount={guessCount}

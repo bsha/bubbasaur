@@ -3,6 +3,9 @@ import { create } from "zustand";
 type GameStatus = "idle" | "playing" | "won" | "lost";
 
 type WordleStore = {
+  // unique identifier for the current game session
+  gameId: string;
+
   // user-configurable settings
   letterCount: number;
   guessCount: number;
@@ -14,18 +17,19 @@ type WordleStore = {
   status: GameStatus;
 
   // settings actions
-  setLetterCount: (count: number) => void;
-  setGuessCount: (count: number) => void;
-  setAnswer: (word: string) => void;
+  //   setLetterCount: (count: number) => void;
+  //   setGuessCount: (count: number) => void;
 
   // gameplay actions
   setCurrentGuess: (guess: string) => void;
   submitGuess: () => void;
   resetGame: () => void;
-  startGame: () => void;
+  startGame: (id: string, answer: string, guessCount: number) => void;
 };
 
 export const useWordleStore = create<WordleStore>((set, get) => ({
+  gameId: "",
+
   letterCount: 5,
   guessCount: 6,
   answer: "",
@@ -34,28 +38,20 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
   currentGuess: "",
   status: "idle",
 
-  setLetterCount: (count) =>
-    set({
-      letterCount: count,
-      answer: "",
-      guesses: [],
-      status: "idle",
-    }),
+  //   setLetterCount: (count) =>
+  //     set({
+  //       letterCount: count,
+  //       answer: "",
+  //       guesses: [],
+  //       status: "idle",
+  //     }),
 
-  setGuessCount: (count) =>
-    set({
-      guessCount: count,
-      guesses: [],
-      status: "idle",
-    }),
-
-  setAnswer: (word) =>
-    set({
-      answer: word,
-      letterCount: word.length,
-      guesses: [],
-      status: "idle",
-    }),
+  //   setGuessCount: (count) =>
+  //     set({
+  //       guessCount: count,
+  //       guesses: [],
+  //       status: "idle",
+  //     }),
 
   setCurrentGuess: (guess) => {
     const { letterCount } = get();
@@ -89,8 +85,12 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
       status: "idle",
     }),
 
-  startGame: () =>
+  startGame: (id: string, answer: string, guessCount: number) =>
     set({
+      gameId: id,
+      answer: answer.toLocaleUpperCase(),
+      letterCount: answer.length,
+      guessCount: guessCount,
       guesses: [],
       currentGuess: "",
       status: "playing",
