@@ -1,9 +1,13 @@
-import styles from "./Key.module.scss";
+import { Button } from "@/components/ui/button";
 
 type Props = { value: string };
 
 const Key = ({ value }: Props) => {
-  return <button className={styles.keyboardKey}>{value}</button>;
+  return (
+    <Button variant="outline" className="p-3 m-0.5 uppercase">
+      {value}
+    </Button>
+  );
 };
 
 export default Key;
