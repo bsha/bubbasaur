@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint-fix": "eslint --fix"
+    "lint-fix": "eslint --fix",
+    "deploy-s3": "aws s3 sync ./out s3://bubbiescorner-283434716356-us-east-2-an --delete --region us-east-2",
+    "bad": "npm run build && npm run deploy-s3"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
