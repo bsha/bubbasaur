@@ -13,16 +13,17 @@ type WordleStore = {
   currentGuess: string;
   status: GameStatus;
 
-  // settings actions
-  setLetterCount: (count: number) => void;
-  setGuessCount: (count: number) => void;
-  setAnswer: (word: string) => void;
-
   // gameplay actions
   setCurrentGuess: (guess: string) => void;
   submitGuess: () => void;
   resetGame: () => void;
-  startGame: () => void;
+  startGame: ({
+    answer,
+    guessCount,
+  }: {
+    answer: string;
+    guessCount: number;
+  }) => void;
 };
 
 export const useWordleStore = create<WordleStore>((set, get) => ({
@@ -33,29 +34,6 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
   guesses: [],
   currentGuess: "",
   status: "idle",
-
-  setLetterCount: (count) =>
-    set({
-      letterCount: count,
-      answer: "",
-      guesses: [],
-      status: "idle",
-    }),
-
-  setGuessCount: (count) =>
-    set({
-      guessCount: count,
-      guesses: [],
-      status: "idle",
-    }),
-
-  setAnswer: (word) =>
-    set({
-      answer: word,
-      letterCount: word.length,
-      guesses: [],
-      status: "idle",
-    }),
 
   setCurrentGuess: (guess) => {
     const { letterCount } = get();
@@ -89,8 +67,11 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
       status: "idle",
     }),
 
-  startGame: () =>
+  startGame: ({ answer, guessCount }: { answer: string; guessCount: number }) =>
     set({
+      answer,
+      letterCount: answer.length,
+      guessCount,
       guesses: [],
       currentGuess: "",
       status: "playing",

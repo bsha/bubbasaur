@@ -8,24 +8,21 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { wordleWordService } from "@/lib/wordleWordService";
 import { useWordleStore } from "@/stores/useWordleStore";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Mode = "letterCount" | "customAnswer";
 
 export default function Page() {
-  const {
-    letterCount,
-    guessCount,
-    answer,
-    setLetterCount,
-    setGuessCount,
-    setAnswer,
-    startGame,
-  } = useWordleStore();
+  const router = useRouter();
+  const { startGame } = useWordleStore();
 
   const [mode, setMode] = useState<Mode>("letterCount");
+  const [guessCount, setGuessCount] = useState<number>(6);
+  const [answer, setAnswer] = useState<string>("");
+  const [letterCount, setLetterCount] = useState<number>(5);
 
   const handleNumberInput = (
     value: string,
@@ -37,6 +34,16 @@ export default function Page() {
     }
 
     setter(parsedValue);
+  };
+  const onStartGame = async () => {
+    let newAnswer = answer.trim().toUpperCase();
+
+    if (mode === "letterCount") {
+      newAnswer = await wordleWordService.getWordByLength(letterCount);
+    }
+
+    startGame({ answer: newAnswer, guessCount });
+    router.push("/games/wordle");
   };
 
   return (
@@ -203,13 +210,15 @@ export default function Page() {
           className="flex flex-wrap items-center justify-end gap-3"
           aria-label="Wordle actions"
         >
-          <Link
-            href="/games/wordle"
-            onClick={startGame}
+          <button
+            type="button"
+            onClick={() => {
+              void onStartGame();
+            }}
             className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Start Game
-          </Link>
+          </button>
         </nav>
       </div>
     </main>
