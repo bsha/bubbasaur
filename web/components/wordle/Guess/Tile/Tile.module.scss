@@ -1,13 +1,19 @@
 .wordle-tile {
-  height: 70px;
-  width: 70px;
+  width: 100%;
+  max-width: 72px;
+  min-width: 48px;
+  aspect-ratio: 1 / 1;
   border: 2px solid var(--default-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: bold;
   text-transform: uppercase;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
   &.correct {
     background-color: #6aaa64;
     color: white;

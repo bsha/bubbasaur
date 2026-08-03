@@ -8,13 +8,17 @@ const keyboardValues: string[][] = [
 ];
 
 const Keyboard = () => {
-  return keyboardValues.map((row, index) => (
-    <div key={index} className={styles.keyboardRow}>
-      {row.map((key, index) => (
-        <Key key={index} value={key}></Key>
+  return (
+    <div className={styles.keyboardContainer} aria-label="Wordle on-screen keyboard" role="group">
+      {keyboardValues.map((row, index) => (
+        <div key={index} className={styles.keyboardRow}>
+          {row.map((key, index) => (
+            <Key key={index} value={key} />
+          ))}
+        </div>
       ))}
     </div>
-  ));
+  );
 };
 
 export default Keyboard;

@@ -17,15 +17,22 @@ const Board = ({
   answer,
 }: Props) => {
   return (
-    <div className={styles.wordleBoard}>
+    <div
+      className={styles.wordleBoard}
+      role="grid"
+      aria-label="Wordle board"
+      aria-rowcount={guessCount}
+      style={{ "--letter-count": letterCount } as React.CSSProperties}
+    >
       {Array(guessCount)
         .fill("")
         .map((_, index) => {
           let value = "";
           const isSubmitted = index < guesses.length;
+          const isCurrent = index === guesses.length;
           if (index < guesses.length) {
             value = guesses[index];
-          } else if (index === guesses.length) {
+          } else if (isCurrent) {
             value = currentGuess;
           }
           return (
@@ -35,6 +42,8 @@ const Board = ({
               value={value}
               answer={answer}
               isSubmitted={isSubmitted}
+              rowIndex={index}
+              isCurrentRow={isCurrent}
             />
           );
         })}

@@ -1,4 +1,17 @@
+.keyboardContainer {
+  display: grid;
+  gap: 0.5rem;
+}
+
 .keyboardRow {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .keyboardRow {
+    gap: 0.25rem;
+  }
 }

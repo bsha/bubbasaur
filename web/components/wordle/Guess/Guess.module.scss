@@ -1,6 +1,7 @@
 .wordleGuess {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(var(--letter-count), minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  justify-items: center;
 }

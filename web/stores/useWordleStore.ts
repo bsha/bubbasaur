@@ -14,7 +14,8 @@ type WordleStore = {
   status: GameStatus;
 
   // gameplay actions
-  setCurrentGuess: (guess: string) => void;
+  addToGuess: (letter: string) => void;
+  removeFromGuess: () => void;
   submitGuess: () => void;
   resetGame: () => void;
   startGame: ({
@@ -35,9 +36,21 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
   currentGuess: "",
   status: "idle",
 
-  setCurrentGuess: (guess) => {
-    const { letterCount } = get();
-    set({ currentGuess: guess.slice(0, letterCount).toUpperCase() });
+  addToGuess: (letter) => {
+    set((state) => ({
+      currentGuess:
+        state.currentGuess.length < state.letterCount
+          ? state.currentGuess + letter.toUpperCase()
+          : state.currentGuess,
+    }));
+  },
+
+  removeFromGuess: () => {
+    set((state) => ({
+      currentGuess: state.currentGuess
+        .slice(0, state.currentGuess.length - 1)
+        .toUpperCase(),
+    }));
   },
 
   submitGuess: () => {
