@@ -27,12 +27,7 @@ export const metadata: Metadata = {
   description: "Safe space on the internet for kids",
 };
 
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+function ListItem({ title, children, href, ...props }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
   return (
     <li {...props}>
       <NavigationMenuLink
@@ -40,9 +35,7 @@ function ListItem({
           <Link href={href}>
             <div className="flex flex-col gap-1 text-sm">
               <div className="leading-none font-medium">{title}</div>
-              <div className="line-clamp-2 text-muted-foreground">
-                {children}
-              </div>
+              <div className="line-clamp-2 text-muted-foreground">{children}</div>
             </div>
           </Link>
         }
@@ -57,18 +50,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-screen overflow-x-hidden">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle()}
-                render={<Link href="/">Home</Link>}
-              />
+              <NavigationMenuLink className={navigationMenuTriggerStyle()} render={<Link href="/">Home</Link>} />
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Games</NavigationMenuTrigger>
@@ -79,6 +66,9 @@ export default function RootLayout({
                   </ListItem>
                   <ListItem href="/games/spordle" title="Spordle">
                     TBA - Word spelling game
+                  </ListItem>
+                  <ListItem href="/games/newGame" title="New Game">
+                    New Game
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
