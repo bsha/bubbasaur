@@ -1,0 +1,1 @@
+type LetterState = "empty" | "absent" | "present" | "correct";
