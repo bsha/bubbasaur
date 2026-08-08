@@ -89,6 +89,7 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
     set({
       guesses: [],
       currentGuess: "",
+      letterStates: new Map<string, LetterState>(),
       status: "idle",
     }),
 
@@ -99,6 +100,7 @@ export const useWordleStore = create<WordleStore>((set, get) => ({
       guessCount,
       guesses: [],
       currentGuess: "",
+      letterStates: new Map<string, LetterState>(),
       status: "playing",
     }),
 }));

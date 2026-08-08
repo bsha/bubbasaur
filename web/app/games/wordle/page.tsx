@@ -8,8 +8,18 @@ import Link from "next/link";
 import { useCallback, useEffect } from "react";
 
 const Wordle = () => {
-  const { letterCount, guessCount, guesses, currentGuess, answer, addToGuess, removeFromGuess, submitGuess, startGame } =
-    useWordleStore();
+  const {
+    status,
+    letterCount,
+    guessCount,
+    guesses,
+    currentGuess,
+    answer,
+    addToGuess,
+    removeFromGuess,
+    submitGuess,
+    startGame,
+  } = useWordleStore();
 
   const onStartGame = useCallback(async () => {
     const newAnswer = await wordleWordService.getWordByLength(letterCount);
@@ -17,11 +27,16 @@ const Wordle = () => {
   }, [guessCount, letterCount, startGame]);
 
   useEffect(() => {
-    onStartGame();
+    if (!answer) {
+      onStartGame();
+    }
   }, [onStartGame]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      if (status !== "playing") {
+        return;
+      }
       if (event.key.length === 1 && /^[A-Za-z]+$/.test(event.key)) {
         addToGuess(event.key);
       } else if (event.key === "Backspace") {
@@ -37,7 +52,7 @@ const Wordle = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [addToGuess, onStartGame, removeFromGuess, submitGuess]);
+  }, [status, addToGuess, onStartGame, removeFromGuess, submitGuess]);
 
   return (
     <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
