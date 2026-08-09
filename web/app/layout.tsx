@@ -1,10 +1,8 @@
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import type { Metadata } from "next";
@@ -58,20 +56,7 @@ export default function RootLayout({
               <NavigationMenuLink className={navigationMenuTriggerStyle()} render={<Link href="/">Home</Link>} />
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Games</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="w-96">
-                  <ListItem href="/games/wordle" title="Wordle">
-                    Word guessing game
-                  </ListItem>
-                  <ListItem href="/games/spordle" title="Spordle">
-                    TBA - Word spelling game
-                  </ListItem>
-                  <ListItem href="/games/newGame" title="New Game">
-                    New Game
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()} render={<Link href="/games/wordle">Wordle</Link>} />
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

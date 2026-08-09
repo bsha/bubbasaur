@@ -1,12 +1,10 @@
 type WordResponse = string | { word?: string };
 
 export class WordleWordService {
-  constructor(
-    private readonly baseUrl: string = "https://random-word-api.herokuapp.com/word",
-  ) {}
+  constructor(private readonly baseUrl: string = "https://random-word-api.herokuapp.com/word") {}
 
   async getWordByLength(letterCount: number): Promise<string> {
-    const response = await fetch(`${this.baseUrl}?length=${letterCount}`, {
+    const response = await fetch(`${this.baseUrl}?length=${letterCount}&diff=1`, {
       cache: "no-store",
     });
 

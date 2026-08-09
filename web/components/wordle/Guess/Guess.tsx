@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Guess = ({ letterCount, value = "", answer = "", isSubmitted = false, rowIndex = 0, isCurrentRow = false }: Props) => {
-  let { updateLetterState } = useWordleStore();
+  const { updateLetterState } = useWordleStore();
   const guessArray = useMemo(
     () => [
       ...(value || "").split("").slice(0, letterCount),
@@ -55,7 +55,7 @@ const Guess = ({ letterCount, value = "", answer = "", isSubmitted = false, rowI
 
   useEffect(() => {
     updateLetterState(guessArray, statuses);
-  }, [statuses]);
+  }, [guessArray, statuses, updateLetterState]);
 
   const rowLabel = isSubmitted
     ? `Submitted guess ${rowIndex + 1}`

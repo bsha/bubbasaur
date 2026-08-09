@@ -30,7 +30,7 @@ const Wordle = () => {
     if (!answer) {
       onStartGame();
     }
-  }, [onStartGame]);
+  }, [answer, onStartGame]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
