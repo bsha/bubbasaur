@@ -177,6 +177,14 @@ export default function Page() {
         <nav className="flex flex-wrap items-center justify-end gap-3" aria-label="Wordle actions">
           <Button
             type="button"
+            onClick={() => {
+              router.push("/games/wordle");
+            }}
+          >
+            Back to Game
+          </Button>
+          <Button
+            type="button"
             disabled={
               (mode === "letterCount" ? !validateNumberBounds(letterCount, 2, 9) : answer.trim() === "") ||
               !validateNumberBounds(guessCount, 1, 20)

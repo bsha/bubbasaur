@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.scss";
+import { Toaster } from "@/components/ui/toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,6 +62,7 @@ export default function RootLayout({
           </NavigationMenuList>
         </NavigationMenu>
         <div className="min-h-full flex flex-col">{children}</div>
+        <Toaster />
       </body>
     </html>
   );

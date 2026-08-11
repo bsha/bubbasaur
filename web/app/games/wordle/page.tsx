@@ -6,6 +6,9 @@ import Keyboard from "@components/wordle/Keyboard";
 import { useWordleStore } from "@stores/useWordleStore";
 import Link from "next/link";
 import { useCallback, useEffect } from "react";
+import { toast } from "@components/ui/toast";
+import { Button } from "@/components/ui/button";
+import router from "next/router";
 
 const Wordle = () => {
   const {
@@ -54,21 +57,50 @@ const Wordle = () => {
     };
   }, [status, addToGuess, onStartGame, removeFromGuess, submitGuess]);
 
+  useEffect(() => {
+    if (status === "won") {
+      const id = toast.add({
+        title: "You won!",
+        description: "Play again!",
+        actionProps: {
+          children: "Play again",
+          onClick() {
+            toast.close(id);
+            onStartGame();
+          },
+        },
+      });
+    } else if (status === "lost") {
+      const id = toast.add({
+        title: "Game over",
+        description: `The word was ${answer}. Try again next time!`,
+        actionProps: {
+          children: "Try again",
+          onClick() {
+            toast.close(id);
+            onStartGame();
+          },
+        },
+      });
+    }
+  }, [status, answer, onStartGame]);
+
   return (
     <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <header className="flex flex-row gap-4 sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Wordle</p>
             <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Play Wordle</h1>
           </div>
-
-          <Link
-            href="/games/wordle/settings"
-            className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            Settings
-          </Link>
+          <div className="flex flex-row gap-4">
+            <Button variant="outline" onClick={onStartGame}>
+              New Game
+            </Button>
+            <Button variant="outline">
+              <Link href="/games/wordle/settings">Settings</Link>
+            </Button>
+          </div>
         </header>
 
         <section aria-labelledby="wordle-game-heading" className="grid gap-6">
